@@ -1,0 +1,33 @@
+Tiny kernel config for kernel developers using QEMU
+
+Compiling a kernel with default options takes a long time
+on machines I have access to. And it needs quite an amount
+of disk space as well.
+
+Compiling a kernel with "make tinyconfig" is fast, but rather
+useless - all the important options are missing.
+
+If one just wants to do some kernel patches the compiling the
+kernel or configuring a useful tiny config can take longer
+than writing the actual kernel patch.
+
+This project is an attempt to provide a base kernel configuration
+for kernel developers who are using qemu. The initial commited
+version takes about 5 minutes to compile (as debian package) on
+my 7 year old Intel Xeon E3-1245 workstation.
+
+Recommended qemu configuration: 
+	- virtio for network and storage
+	- Some drivers supported by QEMU are already in the config,
+	  but not all of them. If qemu refuses to boot up with
+	  this config - typically change your disk settings to
+	  virtio
+	- serial console for access
+
+Recommended grub configuration:
+	- GRUB_TERMINAL=console
+	- GRUB_CMDLINE_LINUX="console=tty0 console=ttyS1,115200"
+	  (assuming two serial consoles, one as default by
+	   virt-manager redirecting to tty0 and a second for
+	  access with minicom or telnet)
+
